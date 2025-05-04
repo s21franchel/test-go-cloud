@@ -1,0 +1,50 @@
+services:
+  loadbalancer:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./configs:/app/configs  # Монтируем конфиг
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
+    networks:
+      - backend-network
+
+  backend1:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    environment:
+      - PORT=8081
+    expose:
+      - "8081"
+    networks:
+      - backend-network
+
+  backend2:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    environment:
+      - PORT=8082
+    expose:
+      - "8082"
+    networks:
+      - backend-network
+
+  backend3:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    environment:
+      - PORT=8083
+    expose:
+      - "8083"
+    networks:
+      - backend-network
+
+networks:
+    backend-network:
+      driver: bridge

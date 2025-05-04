@@ -1,0 +1,5 @@
+listen_port: ":8080"
+backends:
+  - "http://backend1:8081"
+  - "http://backend2:8082"
+  - "http://backend3:8083"
